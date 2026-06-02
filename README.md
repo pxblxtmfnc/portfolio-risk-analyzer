@@ -8,7 +8,7 @@ Built as a learning project to practice Python applied to finance and produce a 
 ![Return Distribution](assets/return_distribution.png)
 ---
 
-## Features (planned)
+## Features
 
 - Download historical adjusted close prices via `yfinance`
 - Calculate portfolio log returns and weighted aggregation
@@ -65,20 +65,18 @@ python main.py \
 
 ## Current Status
 
-**Phase 1 complete — project skeleton.**
+**All phases complete — fully functional CLI tool.**
 
-All modules exist with placeholder functions and type-annotated signatures. No financial logic implemented yet.
-
-| Phase | Description              | Status      |
-|-------|--------------------------|-------------|
-| 1     | Project skeleton         | Done        |
-| 2     | Data loading             | Not started |
-| 3     | Portfolio metrics        | Not started |
-| 4     | Risk metrics             | Not started |
-| 5     | Benchmark analysis       | Not started |
-| 6     | Plotting                 | Not started |
-| 7     | CLI integration          | Not started |
-| 8     | README polish            | Not started |
+| Phase | Description              | Status |
+|-------|--------------------------|--------|
+| 1     | Project skeleton         | Done   |
+| 2     | Data loading             | Done   |
+| 3     | Portfolio metrics        | Done   |
+| 4     | Risk metrics             | Done   |
+| 5     | Benchmark analysis       | Done   |
+| 6     | Plotting                 | Done   |
+| 7     | CLI integration          | Done   |
+| 8     | README polish            | Done   |
 
 ---
 
