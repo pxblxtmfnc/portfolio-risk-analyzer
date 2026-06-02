@@ -1,0 +1,35 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pycache
+
+# Distribution / build
+dist/
+build/
+*.egg-info/
+
+# Generated outputs
+outputs/*.png
+outputs/*.jpg
+outputs/*.svg
+outputs/*.csv
+
+# Environment variables
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.iml
