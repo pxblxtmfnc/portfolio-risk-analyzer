@@ -1,70 +1,65 @@
 """Downside and tail-risk metrics for a portfolio."""
 
+import numpy as np
 import pandas as pd
 
 
 def calculate_drawdown(portfolio_returns: pd.Series) -> pd.Series:
-    """Calculate the drawdown series from portfolio returns.
+    """Calculate the drawdown series from portfolio returns."""
+    if portfolio_returns.empty:
+        raise ValueError("portfolio_returns is empty.")
 
-    Args:
-        portfolio_returns: Series of daily portfolio returns.
-
-    Returns:
-        Series of drawdown values (negative floats).
-    """
-    raise NotImplementedError
+    cumulative = (1 + portfolio_returns).cumprod()
+    running_peak = cumulative.cummax()
+    return (cumulative / running_peak) - 1
 
 
 def maximum_drawdown(portfolio_returns: pd.Series) -> float:
-    """Calculate the maximum drawdown over the full period.
+    """Return the maximum (worst) drawdown over the full period."""
+    if portfolio_returns.empty:
+        raise ValueError("portfolio_returns is empty.")
 
-    Args:
-        portfolio_returns: Series of daily portfolio returns.
-
-    Returns:
-        Maximum drawdown as a negative float.
-    """
-    raise NotImplementedError
+    return float(calculate_drawdown(portfolio_returns).min())
 
 
 def historical_var(
-    portfolio_returns: pd.Series, confidence_level: float = 0.95
+    portfolio_returns: pd.Series,
+    confidence_level: float = 0.95,
 ) -> float:
-    """Calculate historical Value at Risk (VaR).
+    """Return historical Value at Risk as a positive loss figure."""
+    if portfolio_returns.empty:
+        raise ValueError("portfolio_returns is empty.")
+    if not (0 < confidence_level < 1):
+        raise ValueError("confidence_level must be between 0 and 1.")
 
-    Args:
-        portfolio_returns: Series of daily portfolio returns.
-        confidence_level: Confidence level (e.g. 0.95 for 95%).
-
-    Returns:
-        VaR as a negative float representing the loss threshold.
-    """
-    raise NotImplementedError
+    var_threshold = np.percentile(portfolio_returns, (1 - confidence_level) * 100)
+    return abs(float(var_threshold))
 
 
 def historical_cvar(
-    portfolio_returns: pd.Series, confidence_level: float = 0.95
+    portfolio_returns: pd.Series,
+    confidence_level: float = 0.95,
 ) -> float:
-    """Calculate historical Conditional VaR (CVaR / Expected Shortfall).
+    """Return historical CVaR (Expected Shortfall) as a positive loss figure."""
+    if portfolio_returns.empty:
+        raise ValueError("portfolio_returns is empty.")
+    if not (0 < confidence_level < 1):
+        raise ValueError("confidence_level must be between 0 and 1.")
 
-    Args:
-        portfolio_returns: Series of daily portfolio returns.
-        confidence_level: Confidence level (e.g. 0.95 for 95%).
+    var_threshold = np.percentile(portfolio_returns, (1 - confidence_level) * 100)
+    tail_losses = portfolio_returns[portfolio_returns <= var_threshold]
 
-    Returns:
-        CVaR as a negative float representing the expected tail loss.
-    """
-    raise NotImplementedError
+    if tail_losses.empty:
+        raise ValueError("No tail losses found below the VaR threshold.")
+
+    return abs(float(tail_losses.mean()))
 
 
 def worst_days(portfolio_returns: pd.Series, n: int = 5) -> pd.Series:
-    """Return the n worst daily returns.
+    """Return the n worst daily returns, sorted from worst to least bad."""
+    if portfolio_returns.empty:
+        raise ValueError("portfolio_returns is empty.")
+    if not isinstance(n, int) or n <= 0:
+        raise ValueError("n must be a positive integer.")
 
-    Args:
-        portfolio_returns: Series of daily portfolio returns.
-        n: Number of worst days to return.
-
-    Returns:
-        Series of the n lowest daily returns, sorted ascending.
-    """
-    raise NotImplementedError
+    return portfolio_returns.nsmallest(n)
