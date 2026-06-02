@@ -3,7 +3,9 @@
 A Python CLI tool for analyzing the historical risk of an investment portfolio using real market data.
 
 Built as a learning project to practice Python applied to finance and produce a clean GitHub / LinkedIn portfolio piece.
-
+![Cumulative Returns](assets/cumulative_returns.png)
+![Drawdown](assets/drawdown.png)
+![Return Distribution](assets/return_distribution.png)
 ---
 
 ## Features (planned)
